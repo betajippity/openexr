@@ -12,6 +12,8 @@ openexr_define_library(IlmThread
     IlmThreadSemaphorePosix.cpp
     IlmThreadSemaphorePosixCompat.cpp
     IlmThreadSemaphoreWin32.cpp
+    ../Iex/IexBaseExc.cpp
+    ../Iex/IexThrowErrnoExc.cpp
   HEADERS
     IlmThread.h
     IlmThreadExport.h
