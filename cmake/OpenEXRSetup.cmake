@@ -242,11 +242,14 @@ else()
     lib/deflate_decompress.c
     lib/adler32.c
     lib/zlib_compress.c
-    lib/zlib_decompress.c)
+    lib/zlib_decompress.c
+    lib/crc32.c
+    lib/gzip_compress.c
+    lib/gzip_decompress.c)
   # don't need these
-  # lib/crc32.c
-  # lib/gzip_compress.c
-  # lib/gzip_decompress.c
+  # 
+  # 
+  # 
   file(READ ${deflate_SOURCE_DIR}/lib/lib_common.h DEFLATE_HIDE)
   string(REPLACE "visibility(\"default\")" "visibility(\"hidden\")" DEFLATE_HIDE "${DEFLATE_HIDE}")
   string(REPLACE "__declspec(dllexport)" "/**/" DEFLATE_HIDE "${DEFLATE_HIDE}")
