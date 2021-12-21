@@ -98,6 +98,8 @@ openexr_define_library(OpenEXR
     ImfWav.cpp
     ImfZip.cpp
     ImfZipCompressor.cpp
+    ../Iex/IexBaseExc.cpp
+    ../Iex/IexThrowErrnoExc.cpp
   HEADERS
     ImfAcesFile.h
     ImfArray.h
