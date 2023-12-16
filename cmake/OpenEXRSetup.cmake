@@ -171,7 +171,7 @@ if(OPENEXR_ENABLE_THREADING)
   endif()
 endif()
 
-option(OPENEXR_FORCE_INTERNAL_DEFLATE "Force using an internal libdeflate" OFF)
+option(OPENEXR_FORCE_INTERNAL_DEFLATE "Force using an internal libdeflate" ON)
 set(OPENEXR_DEFLATE_REPO "https://github.com/ebiggers/libdeflate.git" CACHE STRING "Repo path for libdeflate source")
 set(OPENEXR_DEFLATE_TAG "v1.18" CACHE STRING "Tag to use for libdeflate source repo (defaults to primary if empty)")
 
@@ -262,7 +262,7 @@ endif()
 # Find or install Imath
 #######################################
 
-option(OPENEXR_FORCE_INTERNAL_IMATH "Force using an internal imath" OFF)
+option(OPENEXR_FORCE_INTERNAL_IMATH "Force using an internal imath" ON)
 # Check to see if Imath is installed outside of the current build directory.
 set(OPENEXR_IMATH_REPO "https://github.com/AcademySoftwareFoundation/Imath.git" CACHE STRING "Repo for auto-build of Imath")
 set(OPENEXR_IMATH_TAG "v3.1.11" CACHE STRING "Tag for auto-build of Imath (branch, tag, or SHA)")
