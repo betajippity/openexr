@@ -14,7 +14,17 @@
 #include <ImfMisc.h>
 #include <ImfStdIO.h>
 #include <errno.h>
+#ifdef __GNUC__
+#if __GNUC__ < 8
+#define BACKCOMPAT_FILESYSTEM 1
+#endif
+#endif
+
+#ifdef BACKCOMPAT_FILESYSTEM
+#include <experimental/filesystem>
+#else
 #include <filesystem>
+#endif
 #if __cplusplus >= 202002L
 #    include <ranges>
 #    include <span>
@@ -27,6 +37,44 @@ OPENEXR_IMF_INTERNAL_NAMESPACE_SOURCE_ENTER
 
 namespace
 {
+
+#ifdef BACKCOMPAT_FILESYSTEM
+
+inline ifstream*
+make_ifstream (const char* filename)
+{
+#        if __cplusplus >= 202002L
+    auto u8view = ranges::views::transform (
+        span{filename, strlen (filename)},
+        [] (char c) -> char8_t { return c; });
+    return new ifstream (
+        experimental::filesystem::path (u8view.begin (), u8view.end ()),
+        ios_base::in | ios_base::binary);
+#        else
+    return new ifstream (
+        experimental::filesystem::u8path (filename),
+        ios_base::in | ios_base::binary);
+#        endif
+}
+
+inline ofstream*
+make_ofstream (const char* filename)
+{
+#        if __cplusplus >= 202002L
+    auto u8view = ranges::views::transform (
+        span{filename, strlen (filename)},
+        [] (char c) -> char8_t { return c; });
+    return new ofstream (
+        experimental::filesystem::path (u8view.begin (), u8view.end ()),
+        ios_base::out | ios_base::binary);
+#        else
+    return new ofstream (
+        experimental::filesystem::u8path (filename),
+        ios_base::out | ios_base::binary);
+#        endif
+}
+
+#else
 
 inline ifstream*
 make_ifstream (const char* filename)
@@ -55,6 +103,8 @@ make_ofstream (const char* filename)
                          ios_base::out | ios_base::binary);
 #endif
 }
+
+#endif
 
 void
 clearError ()
